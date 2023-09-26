@@ -4,54 +4,42 @@ import driver.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import support.ui.SelectEx;
+import url.Urls;
 
 import java.util.List;
 
-public class Dropdown {
+public class Dropdown implements Urls {
     public static void main(String[] args) {
+
         // get a chrome session
         WebDriver driver = DriverFactory.getchrmomeDriver();
 
         try {
             // Navigate to the target page
-            driver.get("https://beta.aloline.vn/auth");
+            driver.get(baseUrlkuapp.concat(dropdown));
 
-            // Defind selector values
-            By loginInputSel = By.tagName("input");
-//            By passworSel = By.cssSelector("[class='ng-pristine ng-invalid ng-touched']");
-            By loginSel = By.tagName("button");
+            // Dropdown locator and element
+            By dropdownSel = By.id("dropdown");
+            WebElement dropdownEln = driver.findElement(dropdownSel);
 
+            // select the dropdown
+//            Select select = new Select(dropdownEln);
+            SelectEx select = new SelectEx(dropdownEln);
 
-            // Find elements
-//            driver.findElement(usernameSel).sendKeys("a0336400645");
-//        WebElement passwordElem = driver.findElement(passworSel);
-//        WebElement loginElem = driver.findElement(loginSel);
+            // select by visible text | option 1
+            select.selectOption1();
+            Thread.sleep(2000);
 
-            // Interaction
+            // select by index
+            select.selectByIndex(2);
+            Thread.sleep(2000);
 
-            List <WebElement> loginFormFieldsElem = driver.findElements(loginInputSel);
-            final int USERNAME_INDEX = 0;
-            final int PASSWORD_INDEX = 1;
+            // select by value
+            select.selectByValue("1");
+            Thread.sleep(2000);
 
-            // Get attributes values
-            System.out.println("Login btn type: " + driver.findElement(loginSel).getAttribute("type"));
-            System.out.println("Login btn background color: " + driver.findElement(loginSel).getCssValue("background-color"));
-
-            loginFormFieldsElem.get(USERNAME_INDEX).sendKeys("0909124124");
-            loginFormFieldsElem.get(PASSWORD_INDEX).sendKeys("0000");
-            driver.findElement(loginSel).click();
-
-            // goback to previous page
-            driver.navigate().back();
-
-            // Refresh page
-            driver.navigate().refresh();
-
-
-
-            // DEbug purpose only
-
-            Thread.sleep(3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
