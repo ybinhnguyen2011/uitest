@@ -5,4 +5,5 @@ public interface Urls {
     String baseUrlkuapp = "https://the-internet.herokuapp.com";
     String dropdown = "/dropdown";
     String iframelug = "/iframe";
+    String hoverlug = "/hover";
 }
