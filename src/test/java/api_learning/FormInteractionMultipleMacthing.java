@@ -5,7 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class FormInteraction {
+import java.util.List;
+
+public class FormInteractionMultipleMacthing {
     public static void main(String[] args) {
         // get a chrome session
         WebDriver driver = DriverFactory.getchrmomeDriver();
@@ -15,20 +17,28 @@ public class FormInteraction {
             driver.get("https://beta.aloline.vn/auth");
 
             // Defind selector values
-            By usernameSel = By.cssSelector("[class='ng-pristine ng-invalid ng-touched']");
+            By loginInputSel = By.tagName("input");
 //            By passworSel = By.cssSelector("[class='ng-pristine ng-invalid ng-touched']");
 //            By loginSel = By.cssSelector("[class='ng-pristine ng-invalid ng-touched']");
 
 
             // Find elements
-            WebElement usernameElem = driver.findElement(usernameSel);
+//            driver.findElement(usernameSel).sendKeys("a0336400645");
 //        WebElement passwordElem = driver.findElement(passworSel);
 //        WebElement loginElem = driver.findElement(loginSel);
 
             // Interaction
-            usernameElem.sendKeys("0336400645");
-//        passwordElem.sendKeys("1111");
-//        loginElem.click();
+
+            List <WebElement> loginFormFieldsElem = driver.findElements(loginInputSel);
+            final int USERNAME_INDEX = 0;
+            final int PASSWORD_INDEX = 1;
+            if (loginFormFieldsElem.isEmpty()) {
+            loginFormFieldsElem.get(USERNAME_INDEX).sendKeys("0909124124");
+            loginFormFieldsElem.get(PASSWORD_INDEX).sendKeys("0000");
+            }else {
+//                Assert.fail("Loi roi =>>>>>>>>");
+            }
+
 
             // DEbug purpose only
 

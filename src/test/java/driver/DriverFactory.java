@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.time.Duration;
+
 public class DriverFactory {
     public static WebDriver getchrmomeDriver() {
         String currentProjectLocation = System.getProperty("user.dir");
@@ -25,6 +27,11 @@ public class DriverFactory {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--incognito-");
 
-        return new ChromeDriver(chromeOptions);
+        WebDriver driver = new ChromeDriver(chromeOptions);
+
+        // Interval time | 500 mili seconds = 0.5s
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+        return driver;
     }
 }
