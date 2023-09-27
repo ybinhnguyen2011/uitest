@@ -45,6 +45,10 @@ public class MouseHoverAndNarrowDownSearchingScope implements Urls {
 
                 // Mouse hover
                 actions.moveToElement(figure).perform();
+
+                // after mouse hover
+                System.out.println(profileNameElem.getText() + profileNameElem.isDisplayed());
+                System.out.println("Is profile link displaying" + profileLinkElem.isDisplayed());
             }
 
             //** Normal finding elements cách củ
