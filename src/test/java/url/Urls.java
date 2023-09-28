@@ -9,4 +9,5 @@ public interface Urls {
     String iframelug = "/iframe";
     String hoverlug = "/hovers";
     String jsAlerlug = "/javascript_alerts";
+    String dynamicControllug = "/dynamic_controls";
 }
