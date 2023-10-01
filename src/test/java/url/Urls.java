@@ -2,6 +2,7 @@ package url;
 
 public interface Urls {
     String baseUrl = "https://beta.aloline.vn/auth";
+    String demoBaseUrl = "https://demowebshop.tricentis.com";
     String baseUrlALOLINE = "https://beta.aloline.vn";
     String loginlug = "/auth";
     String loginlughero = "/login";
