@@ -81,7 +81,7 @@ public class Component {
         if (componentClass.isAnnotationPresent(ComponentCssSelector.class)){
             return By.cssSelector(componentClass.getAnnotation(ComponentCssSelector.class).value());
         } else if (componentClass.isAnnotationPresent(ComponentXpathSelector.class)){
-            return By.cssSelector(componentClass.getAnnotation(ComponentCssSelector.class).value());
+            return By.xpath(componentClass.getAnnotation(ComponentCssSelector.class).value());
         } else {
             throw new IllegalArgumentException("Component Class" + componentClass + " must have annotation"
                     + ComponentXpathSelector.class.getSimpleName() + " or " + ComponentCssSelector.class.getSimpleName());
