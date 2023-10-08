@@ -30,17 +30,17 @@ public class TopMenuComponent extends Component {
         public WebElement catItemLinkElem() {
             return component.findElement(By.tagName("a"));
         }
-        public List<CatItemComponent> catItemComps() {
+        public List<SuplistComponent> suplistComps() {
             Actions actions = new Actions(driver);
             actions.moveToElement(component).perform();
-            return findComponents(CatItemComponent.class, driver);
+            return findComponents(SuplistComponent.class, driver);
         }
     }
 
     @ComponentCssSelector(value = ".sublist li a")
-    public static class CatItemComponent extends Component {
+    public static class SuplistComponent extends Component {
 
-        public CatItemComponent(WebDriver driver, WebElement component) {
+        public SuplistComponent(WebDriver driver, WebElement component) {
             super(driver, component);
         }
     }
