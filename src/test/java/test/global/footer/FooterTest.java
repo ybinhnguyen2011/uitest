@@ -10,27 +10,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import support.verification.Verifier;
+import test.test.BaseTest;
 import test_flows.global.FooterTestFlow;
 import url.Urls;
 
-public class FooterTest {
+public class FooterTest extends BaseTest {
 
 
 
     @Test()
     public void testFooterCategoryPage() {
-        WebDriver driver = DriverFactory.getchrmomeDriver();
-        try {
+
             driver.get(Urls.demoBaseUrl);
             FooterTestFlow footerTestFlow = new FooterTestFlow(driver);
             footerTestFlow.verifyProductCatFooterComponent();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            driver.quit();
-        }
 
     }
 

@@ -1,0 +1,5 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Mon Oct 09 23:46:44 ICT 2023","Mon Oct 09 23:46:44 ICT 2023","1","Regression Test","Global UI","test.global.footer.FooterTest","test.global.footer.FooterTest","testFooterHomePage","testFooterHomePage",""
+"passed","Mon Oct 09 23:46:44 ICT 2023","Mon Oct 09 23:46:44 ICT 2023","1","Regression Test","Global UI","test.global.footer.FooterTest","test.global.footer.FooterTest","testFooterLoginPage","testFooterLoginPage",""
+"failed","Mon Oct 09 23:46:37 ICT 2023","Mon Oct 09 23:46:44 ICT 2023","6778","Regression Test","Global UI","test.global.footer.FooterTest","test.global.footer.FooterTest","testFooterCategoryPage","testFooterCategoryPage",""
+"passed","Mon Oct 09 23:46:44 ICT 2023","Mon Oct 09 23:46:44 ICT 2023","1","Regression Test","Global UI","test.global.footer.FooterTest","test.global.footer.FooterTest","testFooterRegisterPage","testFooterRegisterPage",""
