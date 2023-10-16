@@ -1,9 +1,7 @@
 package models.components;
 
 import net.bytebuddy.implementation.bytecode.Throw;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -90,6 +88,20 @@ public class Component {
             throw new IllegalArgumentException("Component Class" + componentClass + " must have annotation"
                     + ComponentXpathSelector.class.getSimpleName() + " or " + ComponentCssSelector.class.getSimpleName());
         }
+    }
+
+    public void scrollUpToElement(WebElement element){
+        scrollToElement("false", element);
+
+    }
+    public void scrollDownToElement(WebElement element){
+        scrollToElement("true", element);
+
+    }
+
+    private void scrollToElement(String position, WebElement element){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollInToView("+ position +");",element);
+
     }
 
 }
