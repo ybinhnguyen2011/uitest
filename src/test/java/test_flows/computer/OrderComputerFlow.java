@@ -3,7 +3,8 @@ package test_flows.computer;
 import models.components.cart.CartItemRowComponent;
 import models.components.cart.TotalComponent;
 import models.components.checkout.BillingAddressComponent;
-import models.components.checkout.ShippingAddressComponent;
+import models.components.checkout.PaymentInfoComponent;
+import models.components.checkout.PaymentMethodComponent;
 import models.components.checkout.ShippingMethodComponent;
 import models.components.order.ComputeEssentialComponent;
 import models.pages.CheckOutOptionsPage;
@@ -14,12 +15,12 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import test_data.computer.ComputerData;
 import test_data.testdata.DataObjectBuilder;
+import test_data.user.CreditCardType;
+import test_data.user.PaymentMethod;
 import test_data.user.UserDateObject;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +32,7 @@ public class OrderComputerFlow<T extends ComputeEssentialComponent> {
     private final int quantity;
     private double totalItemPrice;
     private UserDateObject defaultCheckoutUser;
+    private PaymentMethod paymentMethod;
 
 
     public OrderComputerFlow(WebDriver driver, Class<T> computerEssentialComponent, ComputerData computerData) {
@@ -189,13 +191,8 @@ public class OrderComputerFlow<T extends ComputeEssentialComponent> {
         checkOutPage.shippingAddressComps().clickOnContinueBtn();
     }
 
-    public void selectPaymentMethod(){
-//        Ground (0.00)
-//        Compared to other shipping methods, like by flight or over seas, ground shipping is carried out closer to the earth
-//        Next Day Air (0.00)
-//        The one day air shipping
-//        2nd Day Air (0.00)
-//        The two day air shipping
+    public void selectShippingMethod(){
+
         List<String> shippingMethods = Arrays.asList("Ground", "Next Day Air", "2nd Day Air");
         String randomShippingMethod = shippingMethods.get(new SecureRandom().nextInt(shippingMethods.size()));
         CheckOutPage checkOutPage = new CheckOutPage(driver);
@@ -205,13 +202,72 @@ public class OrderComputerFlow<T extends ComputeEssentialComponent> {
             Thread.sleep(3000);
         }catch (Exception ignored){}
     }
-    public void inputPaymentInfo(){
-        Assert.fail();
+
+    public void selectPaymentMethod(){
+        this.paymentMethod = PaymentMethod.COD;
+    }
+
+    public void selectPaymentMethod(PaymentMethod paymentMethod){
+        if (paymentMethod == null){
+            throw new IllegalArgumentException("[ERROR] Payment method can't be null");
+
+        }
+        this.paymentMethod = paymentMethod;
+
+        CheckOutPage checkOutPage = new CheckOutPage(driver);
+        PaymentMethodComponent paymentMethodComp = checkOutPage.paymentMethodComps();
+        switch (paymentMethod){
+            case CHECK_MONEY_ORDER:
+                paymentMethodComp.selectCheckMoneyOrderMethod();
+                break;
+            case CREDIT_CARD:
+                paymentMethodComp.selectCreditCardMethod();
+                break;
+            case PURCHASE_ORDER:
+                paymentMethodComp.selectPurchaseOrderMethod();
+                break;
+            default:
+                paymentMethodComp.selectCODMethod();
+        }
+
+    }
+    public void inputPaymentInfo(CreditCardType creditCardType){
+        this.creditCardType = creditCardType;
+        CheckOutPage checkOutPage = new CheckOutPage(driver);
+        PaymentInfoComponent paymentInfoComponent = checkOutPage.paymentInfoComps();
+
+        if (this.paymentMethod.equals(PaymentMethod.PURCHASE_ORDER)){
+            // This can be dynamic as well
+            paymentInfoComponent.inputPurchaseNum("123");
+
+        } else if(this.paymentMethod.equals(PaymentMethod.CREDIT_CARD)) {
+            paymentInfoComponent.selectCardType(creditCardType);
+            String cardHolderFirstName = this.defaultCheckoutUser.getFirstName();
+            String cardHolderLastName = this.defaultCheckoutUser.getLastName();
+            paymentInfoComponent.inputCardHolderName(cardHolderFirstName + " " + cardHolderLastName);
+            String cardNumber = creditCardType.equals(CreditCardType.VISA) ? "4012888888881881" : "6011000990139424";
+            paymentInfoComponent.inputCardCode(cardNumber);
+
+            // Select current month and next year
+            Calendar calendar = new GregorianCalendar();
+            paymentInfoComponent.inputExpireMonth(String.valueOf(calendar.get(Calendar.MONTH) +1));
+            paymentInfoComponent.inputExpireYear(String.valueOf(calendar.get(Calendar.YEAR) +1));
+            paymentInfoComponent.inputCardCode("123");
+            paymentInfoComponent.clickOnContinueBtn();
+
+        } else if(this.paymentMethod.equals(PaymentMethod.COD)) {
+            //TODO: add verification
+        } else {
+            //TODO: verify
+        }
+
+
 
     }
 
     public void confirmOrder(){
-        Assert.fail();
+        //TODO: add verification method
+        new CheckOutPage(driver).confirmOrderComps().clickOnContinueBtn();
 
     }
 

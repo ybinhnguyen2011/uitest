@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import test.test.BaseTest;
 import test_data.computer.ComputerData;
 import test_data.testdata.DataObjectBuilder;
+import test_data.user.CreditCardType;
+import test_data.user.PaymentMethod;
 import test_flows.computer.OrderComputerFlow;
 import url.Urls;
 
@@ -24,8 +26,9 @@ public class BuyingCheapComputerTest extends BaseTest implements Urls {
         orderComputerFlow.agreeTOSAndCheckout();
         orderComputerFlow.inputBillingAddress();
         orderComputerFlow.inputShippingAddress();
-        orderComputerFlow.selectPaymentMethod();
-        orderComputerFlow.inputPaymentInfo();
+        orderComputerFlow.selectShippingMethod();
+        orderComputerFlow.selectPaymentMethod(PaymentMethod.CREDIT_CARD);
+        orderComputerFlow.inputPaymentInfo(CreditCardType.DISCOVER);
         orderComputerFlow.confirmOrder();
     }
 
